@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table'
+import uuid from 'react-uuid'
 
 
 const TableData = ({
@@ -11,7 +12,7 @@ const TableData = ({
       <tr>
           {
               headers?.length &&
-              headers.map(item=><th key={item}>{item}</th>)
+              headers.map(item=><th key={uuid()}>{item}</th>)
           }
       </tr>
     </thead>
@@ -20,8 +21,8 @@ const TableData = ({
           {
               rows?.length &&
               rows.map(item=>{
-                  return <tr>
-                    {Object.values(item).map(data=> <td>{data}</td>)}
+                  return <tr key={uuid()}>
+                    {Object.values(item).map(data=> <td key={uuid()} >{data}</td>)}
                   </tr>
               })
           }

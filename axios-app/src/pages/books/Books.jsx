@@ -4,21 +4,21 @@ import TableData from '../../components/table/Table'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { useHistory } from 'react-router';
-import { deleteMovie, getAllMovies } from '../../services/movies';
+import { deleteBook, getAllBooks } from '../../services/books';
 
 const headers=[
     'id',
     'Naziv',
-    'Režiser',
-    'Scenarista',
-    'Trajanje',
-    'Ocjena',
-    "Izmijeni",
-    "Obrisi",
+    'Pisac',
+    'Izdavač',
+    'Datum izdavanja',
+    'Žanr',
+    'Izmjeni',
+    'Izbriši'
 ]
 
 
-const Movies = () =>{
+const Books = () =>{
 const history= useHistory();
 const [rows,setRows] = useState([]);
 const [isModalOpen,setIsModalOpen] = useState(false)
@@ -27,7 +27,7 @@ const [refresh,setRefresh] = useState(0)
 
 const onDelete = () =>{
     if(modalData?.id){
-        deleteMovie(modalData?.id)
+        deleteBook(modalData?.id)
         .then(()=>{
             setIsModalOpen(false);
             setRefresh((prevState)=>prevState +1)
@@ -39,18 +39,18 @@ const onDelete = () =>{
 }
 
 useEffect(() =>{
-    getAllMovies()
+    getAllBooks()
     .then((r)=>{
 
         const data = r?.data.map(item=>{
             return {
                 id:item.id,
-                name: item.name,
-                directorName:item.directorName,
+                name: item.isbn,
                 writerName:item.writerName,
-                duration:item.duration,
-                ration:item.rating,
-                edit:<button onClick={()=>history.push(`movies/${item.id}`)}>Izmjeni</button>,
+                publisherName:item.publisherName,
+                publishedDate:item.publishedDate,
+                genre:item.genre,
+                edit:<button onClick={()=>history.push(`books/${item.id}`)}>Izmjeni</button>,
                 delete:<button onClick={()=>{
                     setModalData(item);
                     setIsModalOpen(true)
@@ -68,9 +68,9 @@ useEffect(() =>{
     return <div>
             <Modal show={isModalOpen} onHide={()=>setIsModalOpen(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Brisanje filma</Modal.Title>
+          <Modal.Title>Brisanje knjige</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Da li ste sigurni da zelite izbrisati {modalData?.name}</Modal.Body>
+        <Modal.Body>Da li ste sigurni da zelite izbrisati {modalData?.writerName}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=>setIsModalOpen(false)}>
             Odustani
@@ -84,11 +84,11 @@ useEffect(() =>{
    headers={headers}
    rows={rows}
    />
-   <button onClick={()=>history.push('/movies/add')}>Dodaj</button>
+   <button onClick={()=>history.push('/books/dodaj')}>Dodaj</button>
 
     </div>
 }
 
 
 
-export default Movies
+export default Books

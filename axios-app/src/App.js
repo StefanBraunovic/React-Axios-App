@@ -6,6 +6,8 @@ import Home from './pages/home/Home';
 import Movies from './pages/movies/Movies';
 import NavbarTop from './components/navbar/Navbar';
 import MovieEdit from './pages/movies/MovieEdit';
+import Books from './pages/books/Books';
+import BookEdit from './pages/books/BookEdit';
 
 function App() {
 	return (
@@ -15,6 +17,8 @@ function App() {
 				<Route path={'/login'} component={Login}></Route>
 				<Route path={'/movies/:id'} component={MovieEdit}></Route>
 				<Route path={'/movies'} component={Movies}></Route>
+				<Route path={'/books/:id'} component={BookEdit}></Route>
+				<Route path={'/books'} component={Books}></Route>
 				<Route path={'/'} component={Home}></Route>
 			</Switch>
 		</div>

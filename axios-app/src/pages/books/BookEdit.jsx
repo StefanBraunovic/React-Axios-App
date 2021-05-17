@@ -3,18 +3,18 @@ import { useHistory, useParams } from "react-router-dom";
 import  { Col, Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {addMovie, editMovie, getMovie} from '../../services/movies';
+import {addBook, editBook, getBook} from '../../services/books';
 
 const initialData={
     id:0,
-    name: '',
-    directorName:'',
+    isbn: '',
     writerName:'',
-    duration:0,
-    ration:0,
+    publisherName:'',
+    publishedDate:'',
+    genre:''
 }
 
-const MovieEdit = () =>{
+const BookEdit = () =>{
     const{id}= useParams();
     const history = useHistory();
     const [formData,setformData] = useState({initialData});
@@ -22,18 +22,19 @@ const MovieEdit = () =>{
     const onSubmit = (e) =>{
         e.preventDefault()
         if(id !== 'add'){
-        editMovie(formData)
+        editBook(formData)
         .then((r)=>{
-                history.push("/movies")
+            console.log(r);
+                history.push("/books")
 })
 .catch((r)=>{
     console.log(r?.response?.data);
 })}
 else{
     delete formData.id;
-    addMovie(formData)
+    addBook(formData)
     .then((r)=>{
-        history.push("/movies")
+        history.push("/books")
     })
     .catch ((err)=>{
         console.log(err);
@@ -45,7 +46,7 @@ else{
     useEffect(()=>{
 
         if(id !== 'add'){
-            getMovie(id)
+            getBook(id)
             .then(r=>{
                 setformData(r?.data)
             })
@@ -60,29 +61,18 @@ else{
         <Form>
   <Form.Group controlId="Naziv">
     <Form.Label>Naziv</Form.Label>
-    <Form.Control type="text" placeholder="Unesite naziv filma" value={formData?.name}
+    <Form.Control type="text" placeholder="Unesite naziv knjige" value={formData?.isbn}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
-                        name: e.target.value
+                        isbn: e.target.value
                     }
                 })}
     />
     </Form.Group>
     <Form.Group >
-    <Form.Label>Režiser</Form.Label>
-    <Form.Control type="text" placeholder="Unesite naziv reŽisera" value={formData?.directorName}
-                onChange={(e)=>setformData(prevState=>{
-                    return {
-                        ...prevState,
-                        directorName: e.target.value
-                    }
-                })}
-    />
-    </Form.Group>
-    <Form.Group >
-    <Form.Label>Scenarista</Form.Label>
-    <Form.Control type="text" placeholder="Unesite naziv scenariste" value={formData?.writerName}
+    <Form.Label>Pisac</Form.Label>
+    <Form.Control type="text" placeholder="Unesite naziv pisca" value={formData?.writerName}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -92,23 +82,34 @@ else{
     />
     </Form.Group>
     <Form.Group >
-    <Form.Label>Trajanje</Form.Label>
-    <Form.Control type="number" placeholder=" Unesite trajanje" value={formData?.duration}
+    <Form.Label>Izdavač</Form.Label>
+    <Form.Control type="text" placeholder="Unesite naziv izdvavača" value={formData?.publisherName}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
-                        duration: e.target.value
+                        publisherName: e.target.value
                     }
                 })}
     />
     </Form.Group>
     <Form.Group >
-    <Form.Label>Ocjena</Form.Label>
-    <Form.Control type="number" placeholder="Unesite ocjena" value={formData?.rating}
+    <Form.Label>Godina izdavanja</Form.Label>
+    <Form.Control type="text" placeholder=" Unesite datum" value={formData?.publishedDate}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
-                        rating: e.target.value
+                        publishedDate: e.target.value
+                    }
+                })}
+    />
+    </Form.Group>
+    <Form.Group >
+    <Form.Label>Zanr</Form.Label>
+    <Form.Control type="text" placeholder="Žanr" value={formData?.genre}
+                onChange={(e)=>setformData(prevState=>{
+                    return {
+                        ...prevState,
+                        genre: e.target.value
                     }
                 })}
     />
@@ -128,4 +129,4 @@ else{
     </div>
 }
 
-export default MovieEdit
+export default BookEdit

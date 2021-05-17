@@ -1,13 +1,13 @@
 import axiosInstance from './axios';
 // import axios from 'axios';
 
-export const getAllMovies = () => {
+export const getAllBooks = () => {
 	return axiosInstance
-		.get('movies/count', {
+		.get('books/count', {
 			headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 		})
 		.then((r) => {
-			return axiosInstance.get(`movies?size=${r.data}`, {
+			return axiosInstance.get(`books?size=${r.data}`, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('jwt_token')}`,
 				},
@@ -15,26 +15,26 @@ export const getAllMovies = () => {
 		});
 };
 
-export const deleteMovie = (movieId) => {
-	return axiosInstance.delete(`movies/${movieId}`, {
+export const deleteBook = (bookId) => {
+	return axiosInstance.delete(`books/${bookId}`, {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };
 
-export const getMovie = (movieId) => {
-	return axiosInstance.get(`movies/${movieId}`, {
+export const getBook = (bookId) => {
+	return axiosInstance.get(`books/${bookId}`, {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };
 
-export const addMovie = (data) => {
-	return axiosInstance.post(`movies`, data, {
+export const addBook = (data) => {
+	return axiosInstance.post(`books`, data, {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };
 
-export const editMovie = (data) => {
-	return axiosInstance.put(`movies`, data, {
+export const editBook = (data) => {
+	return axiosInstance.put(`books`, data, {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };
