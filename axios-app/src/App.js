@@ -19,7 +19,7 @@ function App() {
 				<Route path={'/movies'} component={Movies}></Route>
 				<Route path={'/books/:id'} component={BookEdit}></Route>
 				<Route path={'/books'} component={Books}></Route>
-				<Route path={'/'} component={Home}></Route>
+				<Route path={'/'} exact component={Home}></Route>
 			</Switch>
 		</div>
 	);

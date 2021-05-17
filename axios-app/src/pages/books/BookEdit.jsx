@@ -94,7 +94,7 @@ else{
     </Form.Group>
     <Form.Group >
     <Form.Label>Godina izdavanja</Form.Label>
-    <Form.Control type="text" placeholder=" Unesite datum" value={formData?.publishedDate}
+    <Form.Control type="date" placeholder=" Unesite datum" value={formData?.publishedDate}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,

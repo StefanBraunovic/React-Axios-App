@@ -84,7 +84,7 @@ useEffect(() =>{
    headers={headers}
    rows={rows}
    />
-   <button onClick={()=>history.push('/books/dodaj')}>Dodaj</button>
+   <button onClick={()=>history.push('/books/add')}>Dodaj</button>
 
     </div>
 }
