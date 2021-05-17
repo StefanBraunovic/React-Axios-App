@@ -18,7 +18,7 @@ const TableData = ({
     <tbody>
       
           {
-              rows.length &&
+              rows?.length &&
               rows.map(item=>{
                   return <tr>
                     {Object.values(item).map(data=> <td>{data}</td>)}

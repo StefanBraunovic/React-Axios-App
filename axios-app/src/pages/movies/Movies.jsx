@@ -4,6 +4,7 @@ import TableData from '../../components/table/Table'
 import { deleteMovie, getAllMovies } from '../../services/movies';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import { useHistory } from 'react-router';
 
 const headers=[
     'id',
@@ -18,7 +19,7 @@ const headers=[
 
 
 const Movies = () =>{
-
+const history= useHistory();
 const [rows,setRows] = useState([]);
 const [isModalOpen,setIsModalOpen] = useState(false)
 const [modalData,setModalData] = useState();
@@ -49,7 +50,7 @@ useEffect(() =>{
                 writerName:item.writerName,
                 duration:item.duration,
                 ration:item.rating,
-                edit:<button onClick>Izmjeni</button>,
+                edit:<button onClick={()=>history.push(`movies/${item.id}`)}>Izmjeni</button>,
                 delete:<button onClick={()=>{
                     setModalData(item);
                     setIsModalOpen(true)
@@ -83,7 +84,7 @@ useEffect(() =>{
    headers={headers}
    rows={rows}
    />
-   {/* <button onClick>Dodaj</button> */}
+   <button onClick={()=>history.push('/movies/add')}>Dodaj</button>
 
     </div>
 }

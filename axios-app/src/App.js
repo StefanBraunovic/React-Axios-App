@@ -5,18 +5,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/home/Home';
 import Movies from './pages/movies/Movies';
 import NavbarTop from './components/navbar/Navbar';
+import MovieEdit from './pages/movies/MovieEdit';
 
 function App() {
-  return (
-    <div className="App">
-      <NavbarTop/>
-     <Switch>
-    <Route path={"/login"} component={Login}></Route>
-    <Route path={"/movies"} component={Movies}></Route>
-    <Route path={"/"} component={Home}></Route>
-     </Switch>
-    </div>
-  );
+	return (
+		<div className="App">
+			<NavbarTop />
+			<Switch>
+				<Route path={'/login'} component={Login}></Route>
+				<Route path={'/movies/:id'} component={MovieEdit}></Route>
+				<Route path={'/movies'} component={Movies}></Route>
+				<Route path={'/'} component={Home}></Route>
+			</Switch>
+		</div>
+	);
 }
 
 export default App;
