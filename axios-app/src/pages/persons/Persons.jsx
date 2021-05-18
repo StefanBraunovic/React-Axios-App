@@ -8,13 +8,14 @@ import { deletePerson, getAllPeople} from '../../services/persons';
 
 const headers=[
     'id',
-    'Naziv',
-    'Režiser',
-    'Scenarista',
-    'Trajanje',
-    'Ocjena',
+    'Ime',
+    'Prezime',
+    'Datum rođenja',
+    'Broj godina',
+    'Pol',
+    'Zanimanje',
     "Izmijeni",
-    "Obrisi",
+    "Obriši",
 ]
 
 
@@ -49,7 +50,7 @@ useEffect(() =>{
                 lastName:item.lastName,
                 dateOfBirth:item.dateOfBirth,
                 age:item.age,
-                // gender:item.gender,
+                gender:item.gender,
                 occupation:item.occupation,
                 edit:<button onClick={()=>history.push(`people/${item.id}`)}>Izmjeni</button>,
                 delete:<button onClick={()=>{

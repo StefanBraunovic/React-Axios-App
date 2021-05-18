@@ -14,7 +14,7 @@ const headers=[
     'Trajanje',
     'Ocjena',
     "Izmijeni",
-    "Obrisi",
+    "Obriši",
 ]
 
 

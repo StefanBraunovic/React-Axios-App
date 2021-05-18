@@ -14,7 +14,7 @@ const headers=[
     'Datum izdavanja',
     'Žanr',
     'Izmjeni',
-    'Izbriši'
+    'Obriši'
 ]
 
 

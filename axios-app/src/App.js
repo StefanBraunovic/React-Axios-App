@@ -1,10 +1,9 @@
-import { Switch, Route } from 'react-router';
+import { Switch } from 'react-router';
 import './App.css';
 import Login from './pages/login/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/home/Home';
 import Movies from './pages/movies/Movies';
-import NavbarTop from './components/navbar/Navbar';
 import MovieEdit from './pages/movies/MovieEdit';
 import Books from './pages/books/Books';
 import BookEdit from './pages/books/BookEdit';
