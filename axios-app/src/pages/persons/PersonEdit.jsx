@@ -114,7 +114,6 @@ else{
                                        return{...prevState,'gender':e.target.value}
                                    })}
                             >
-                                <option>-select gander-</option>
                                 <option>MALE</option>
                                 <option>FEMALE</option>
                                 <option>OTHER</option>
@@ -123,7 +122,7 @@ else{
 
     <Form.Group >
     <Form.Label>Zanimanje</Form.Label>
-    <Form.Control type="text" placeholder="Unesite svoja" value={formData?.occupation}
+    <Form.Control type="text" placeholder="Unesite zanimanje" value={formData?.occupation}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
