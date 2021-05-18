@@ -4,7 +4,7 @@ import React from 'react';
 const Home = () =>{
     
     return <div>
-<h1>Hello</h1>
+<h1>Naslovna Strana</h1>
     </div>
 }
 

@@ -1,32 +1,32 @@
 import axiosInstance from './axios';
 // import axios from 'axios';
 
-export const getAllMovies = () => {
-	return axiosInstance.get('movies', {
+export const getAllPeople = () => {
+	return axiosInstance.get('people', {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };
 
-export const deleteMovie = (movieId) => {
-	return axiosInstance.delete(`movies/${movieId}`, {
+export const deletePerson = (personId) => {
+	return axiosInstance.delete(`people/${personId}`, {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };
 
-export const getMovie = (movieId) => {
-	return axiosInstance.get(`movies/${movieId}`, {
+export const getPerson = (personId) => {
+	return axiosInstance.get(`people/${personId}`, {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };
 
-export const addMovie = (data) => {
-	return axiosInstance.post(`movies`, data, {
+export const addPeople = (data) => {
+	return axiosInstance.post(`people`, data, {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };
 
-export const editMovie = (data) => {
-	return axiosInstance.put(`movies`, data, {
+export const editPerson = (data) => {
+	return axiosInstance.put(`people`, data, {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };

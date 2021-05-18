@@ -8,18 +8,38 @@ import NavbarTop from './components/navbar/Navbar';
 import MovieEdit from './pages/movies/MovieEdit';
 import Books from './pages/books/Books';
 import BookEdit from './pages/books/BookEdit';
+import PersonEdit from './pages/persons/PersonEdit';
+import Persons from './pages/persons/Persons';
+import PrivateRoute from './privateRoute/PrivateRoute';
 
 function App() {
 	return (
 		<div className="App">
-			<NavbarTop />
+			{/* <NavbarTop /> */}
 			<Switch>
-				<Route path={'/login'} component={Login}></Route>
-				<Route path={'/movies/:id'} component={MovieEdit}></Route>
-				<Route path={'/movies'} component={Movies}></Route>
-				<Route path={'/books/:id'} component={BookEdit}></Route>
-				<Route path={'/books'} component={Books}></Route>
-				<Route path={'/'} exact component={Home}></Route>
+				<PrivateRoute path={'/login'} component={Login} />
+				<PrivateRoute
+					path={'/movies/:id'}
+					exact
+					component={MovieEdit}
+					isPrivate
+				/>
+				<PrivateRoute path={'/movies'} exact component={Movies} isPrivate />
+				<PrivateRoute
+					path={'/books/:id'}
+					exact
+					component={BookEdit}
+					isPrivate
+				/>
+				<PrivateRoute path={'/books'} exact component={Books} isPrivate />
+				<PrivateRoute
+					path={'/people/:id'}
+					exact
+					component={PersonEdit}
+					isPrivate
+				/>
+				<PrivateRoute path={'/people'} exact component={Persons} isPrivate />
+				<PrivateRoute path={'/'} exact component={Home} isPrivate />
 			</Switch>
 		</div>
 	);
