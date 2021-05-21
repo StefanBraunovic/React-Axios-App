@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 // import axios from 'axios';
 import {login} from "../../services/account"
 import { useHistory } from 'react-router';
+// import {getAccount} from '../../services/account'
 
 const Login= () =>{
     const history = useHistory();
@@ -15,26 +16,32 @@ const Login= () =>{
         rememberMe:false
     })
 
+  
+
     const [errorMessage,setErrorMessage] = useState('');
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(loginData);
-     login(loginData)
+        
+        login(loginData)
      .then(function(response){
          console.log(response);
          console.log(response?.data['id_token']);
+         console.log(response?.data['login']);
          localStorage.setItem('jwt_token',response?.data['id_token'])
+         localStorage.setItem('username', loginData?.username)
+
          history.push('/')
-     })
-     .catch(function(error){
-         console.log(error?.response?.data);
-         if(error?.response?.data?.detail === 'Bad credentials'){
+        })
+        .catch(function(error){
+            console.log(error?.response?.data);
+            if(error?.response?.data?.detail === 'Bad credentials'){
                 setErrorMessage("Bad credentials")
-         }else {
-            setErrorMessage("Error")
-         }
-     })
+            }else {
+                setErrorMessage("Error")
+            }
+        })
+        
     }
 
     return <div>

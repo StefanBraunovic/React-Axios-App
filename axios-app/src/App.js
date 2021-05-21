@@ -10,6 +10,7 @@ import BookEdit from './pages/books/BookEdit';
 import PersonEdit from './pages/persons/PersonEdit';
 import Persons from './pages/persons/Persons';
 import PrivateRoute from './privateRoute/PrivateRoute';
+import Register from './pages/register/Register';
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 			{/* <NavbarTop /> */}
 			<Switch>
 				<PrivateRoute path={'/login'} component={Login} />
+				<PrivateRoute path={'/register'} component={Register} />
 				<PrivateRoute
 					path={'/movies/:id'}
 					exact

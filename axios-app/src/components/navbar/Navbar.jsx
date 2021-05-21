@@ -5,6 +5,8 @@ import {Link,useHistory} from 'react-router-dom'
 
 const NavbarTop = ()=>{
   const history = useHistory();
+
+
     return <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
   <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -14,6 +16,9 @@ const NavbarTop = ()=>{
       <Nav.Link><Link to="/movies">Filmovi</Link></Nav.Link>
       <Nav.Link><Link to="/books">Knjige</Link></Nav.Link>
       <Nav.Link><Link to="/people">Osobe</Link></Nav.Link>
+      <Nav.Link>
+        {localStorage.getItem('username')}
+      </Nav.Link>
       <Nav.Link onClick={() => {
                     localStorage.clear();
                     history.push("/login");
