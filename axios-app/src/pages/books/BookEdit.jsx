@@ -1,3 +1,7 @@
+import {QueryClient,useMutation} from 'react-query';
+import Swal from 'sweetalert2'
+
+
 import React,{useState,useEffect} from "react";
 import { useHistory, useParams } from "react-router-dom";
 import  { Col, Container, Row } from 'react-bootstrap';
@@ -15,33 +19,52 @@ const initialData={
 }
 
 const BookEdit = () =>{
+    const queryClient = new QueryClient()
+
     const{id}= useParams();
     const history = useHistory();
     const [formData,setformData] = useState({initialData});
 
-    const onSubmit = (e) =>{
+    
+    const onSubmit = (e) => {
         e.preventDefault()
         if(id !== 'add'){
-        editBook(formData)
-        .then((r)=>{
-            console.log(r);
-                history.push("/books")
-})
-.catch((r)=>{
-    console.log(r?.response?.data);
-})}
-else{
-    delete formData.id;
-    addBook(formData)
-    .then((r)=>{
-        history.push("/books")
-    })
-    .catch ((err)=>{
-        console.log(err);
-    })
+            mutationEdit.mutate(formData)
+        }else{
+            delete formData.id;
+            mutationAdd.mutate(formData)
+        }
+    }
 
+     const mutationEdit = useMutation(
+        (data) => editBook(data)
+        , {
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries('movies');
+            history.push("/movies");
+            Swal.fire(
+                'Good job!',
+                'You edit book!',
+                'success'
+              )
+        },
+    });
 
-        }}
+      const mutationAdd = useMutation(
+        (data) => addBook(data)
+        , {
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries('movies');
+            history.push("/movies"); 
+             Swal.fire(
+                'Good job!',
+                'You added book!',
+                'success'
+              )
+        },
+    });
 
     useEffect(()=>{
 

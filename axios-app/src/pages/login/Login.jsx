@@ -4,8 +4,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 // import axios from 'axios';
 import {login} from "../../services/account"
-import { useHistory } from 'react-router';
+import { useHistory,Link } from 'react-router-dom';
 // import {getAccount} from '../../services/account'
+
+import Nav from 'react-bootstrap/Nav'
 
 const Login= () =>{
     const history = useHistory();
@@ -27,11 +29,11 @@ const Login= () =>{
      .then(function(response){
          console.log(response);
          console.log(response?.data['id_token']);
-         console.log(response?.data['login']);
          localStorage.setItem('jwt_token',response?.data['id_token'])
          localStorage.setItem('username', loginData?.username)
-
+         
          history.push('/')
+      
         })
         .catch(function(error){
             console.log(error?.response?.data);
@@ -41,12 +43,18 @@ const Login= () =>{
                 setErrorMessage("Error")
             }
         })
+       
+    
         
     }
 
     return <div>
 
 <Container>
+
+      <Nav.Link><Link style={{float:'right'}} to="/register">Sign Up</Link></Nav.Link>
+    
+  
     <Row  className="justify-content-md-center" style={{marginTop:"200px"}}>
         <Col xs={4}>
         <Form>

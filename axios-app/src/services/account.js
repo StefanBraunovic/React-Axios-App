@@ -12,14 +12,18 @@ export const login = (data) =>{
 
 
 export const registerAccount = (data) => {
-	return axiosInstance.post(`register`, data, {
-		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
-	});
-};
+    return axiosInstance.post('/register', {
+      login: data.login,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      authorities: ['ROLE_USER'],
+    });
+  };
 
-
-export const getUser = (data) => {
-	return axiosInstance.post(`users/`, data, {
+export const getAccount = () => {
+	return axiosInstance.get(`account`,  {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
 	});
 };

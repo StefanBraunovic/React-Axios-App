@@ -2,8 +2,16 @@ import axiosInstance from './axios';
 // import axios from 'axios';
 
 export const getAllMovies = () => {
-	return axiosInstance.get('movies', {
+	return axiosInstance
+	.get('movies/count', {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
+	})
+	.then((r) => {
+		return axiosInstance.get(`movies?size=${r.data}`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('jwt_token')}`,
+			},
+		});
 	});
 };
 

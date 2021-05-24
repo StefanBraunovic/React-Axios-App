@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 // import NavbarTop from '../../components/navbar/Navbar'
+import {useQuery} from 'react-query'
+
 import TableData from '../../components/table/Table'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -24,6 +26,11 @@ const [rows,setRows] = useState([]);
 const [isModalOpen,setIsModalOpen] = useState(false)
 const [modalData,setModalData] = useState();
 const [refresh,setRefresh] = useState(0)
+
+const {query} = useQuery('movies', getAllMovies)
+console.log(query);
+
+
 
 const onDelete = () =>{
     if(modalData?.id){

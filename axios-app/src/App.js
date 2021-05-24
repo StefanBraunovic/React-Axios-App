@@ -1,4 +1,8 @@
 import { Switch } from 'react-router';
+import {QueryClient,QueryClientProvider} from 'react-query'
+
+import { ReactQueryDevtools } from 'react-query/devtools'
+
 import './App.css';
 import Login from './pages/login/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,8 +16,15 @@ import Persons from './pages/persons/Persons';
 import PrivateRoute from './privateRoute/PrivateRoute';
 import Register from './pages/register/Register';
 
+
+
+const queryClient = new QueryClient()
+
 function App() {
 	return (
+		<QueryClientProvider client={queryClient}>
+			       <ReactQueryDevtools initialIsOpen={false} />
+
 		<div className="App">
 			{/* <NavbarTop /> */}
 			<Switch>
@@ -43,6 +54,7 @@ function App() {
 				<PrivateRoute path={'/'} exact component={Home} isPrivate />
 			</Switch>
 		</div>
+		</QueryClientProvider>
 	);
 }
 

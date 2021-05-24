@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import {useQuery} from 'react-query'
 // import NavbarTop from '../../components/navbar/Navbar'
 import TableData from '../../components/table/Table'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { useHistory } from 'react-router';
 import { deletePerson, getAllPeople} from '../../services/persons';
+
 
 const headers=[
     'id',
@@ -25,6 +27,9 @@ const [rows,setRows] = useState([]);
 const [isModalOpen,setIsModalOpen] = useState(false)
 const [modalData,setModalData] = useState();
 const [refresh,setRefresh] = useState(0)
+
+const {query} = useQuery('people', getAllPeople)
+console.log(query);
 
 const onDelete = () =>{
     if(modalData?.id){

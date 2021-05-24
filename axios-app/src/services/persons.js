@@ -2,8 +2,16 @@ import axiosInstance from './axios';
 // import axios from 'axios';
 
 export const getAllPeople = () => {
-	return axiosInstance.get('people', {
+	return axiosInstance
+	.get('people/count', {
 		headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` },
+	})
+	.then((r) => {
+		return axiosInstance.get(`people?size=${r.data}`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('jwt_token')}`,
+			},
+		});
 	});
 };
 

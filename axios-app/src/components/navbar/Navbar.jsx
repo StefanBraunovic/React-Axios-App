@@ -2,9 +2,19 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import {Link,useHistory} from 'react-router-dom'
+import {getAccount} from '../../services/account'
+import { useState } from 'react';
 
 const NavbarTop = ()=>{
   const history = useHistory();
+
+ const [accountName,getAccountName]= useState()
+
+  getAccount()
+  .then(function(r){
+     getAccountName(r?.data.login)
+    
+  })
 
 
     return <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -17,7 +27,7 @@ const NavbarTop = ()=>{
       <Nav.Link><Link to="/books">Knjige</Link></Nav.Link>
       <Nav.Link><Link to="/people">Osobe</Link></Nav.Link>
       <Nav.Link>
-        {localStorage.getItem('username')}
+      {accountName}
       </Nav.Link>
       <Nav.Link onClick={() => {
                     localStorage.clear();
