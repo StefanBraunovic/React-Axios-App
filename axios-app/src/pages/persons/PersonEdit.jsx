@@ -40,8 +40,8 @@ const PersonEdit = () =>{
         , {
         onSuccess: () => {
             // Invalidate and refetch
-            queryClient.invalidateQueries('movies');
-            history.push("/movies");
+            queryClient.invalidateQueries('people');
+            history.push("/people");
             Swal.fire(
                 'Good job!',
                 'You edit person!',
@@ -55,8 +55,8 @@ const PersonEdit = () =>{
         , {
         onSuccess: () => {
             // Invalidate and refetch
-            queryClient.invalidateQueries('movies');
-            history.push("/movies"); 
+            queryClient.invalidateQueries('people');
+            history.push("/people"); 
              Swal.fire(
                 'Good job!',
                 'You added person!',

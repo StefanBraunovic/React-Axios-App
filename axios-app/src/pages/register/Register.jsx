@@ -83,7 +83,7 @@ const {
           {...register('firstName', {
             required: 'This field is required',
           })}
-          placeholder="first anem"
+          placeholder="first name"
         />
         <small style={{color:"red"}} className="invalid-field">{errors.firstName?.message}</small>
       </Form.Group>
@@ -107,7 +107,7 @@ const {
           {...register('email', {
             required: 'This field is required',
           })}
-          placeholder="email adress"
+          placeholder="email address"
         />
         <small style={{color:"red"}} className="invalid-field">{errors.email?.message}</small>
       </Form.Group>

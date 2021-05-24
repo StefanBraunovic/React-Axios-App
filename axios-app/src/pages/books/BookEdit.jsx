@@ -1,4 +1,5 @@
 import {QueryClient,useMutation} from 'react-query';
+import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
 
 
@@ -20,6 +21,7 @@ const initialData={
 
 const BookEdit = () =>{
     const queryClient = new QueryClient()
+    const { register, handleSubmit,formState:{errors} } = useForm();
 
     const{id}= useParams();
     const history = useHistory();
@@ -41,8 +43,8 @@ const BookEdit = () =>{
         , {
         onSuccess: () => {
             // Invalidate and refetch
-            queryClient.invalidateQueries('movies');
-            history.push("/movies");
+            queryClient.invalidateQueries('books');
+            history.push("/books");
             Swal.fire(
                 'Good job!',
                 'You edit book!',
@@ -56,8 +58,8 @@ const BookEdit = () =>{
         , {
         onSuccess: () => {
             // Invalidate and refetch
-            queryClient.invalidateQueries('movies');
-            history.push("/movies"); 
+            queryClient.invalidateQueries('book');
+            history.push("/books"); 
              Swal.fire(
                 'Good job!',
                 'You added book!',
@@ -81,10 +83,14 @@ const BookEdit = () =>{
         <Container>
     <Row  className="justify-content-md-center" style={{marginTop:"50px"}}>
         <Col xs={4}>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
   <Form.Group controlId="Naziv">
     <Form.Label>Naziv</Form.Label>
-    <Form.Control type="text" placeholder="Unesite naziv knjige" value={formData?.isbn}
+    <Form.Control type="text" placeholder="Unesite naziv knjige" 
+                 {...register("isbn",{
+                    required:true
+                })}
+                value={formData?.isbn}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -92,10 +98,15 @@ const BookEdit = () =>{
                     }
                 })}
     />
+    <span style={{color:"red"}}>{errors?.isbn?.message}</span>
     </Form.Group>
     <Form.Group >
     <Form.Label>Pisac</Form.Label>
-    <Form.Control type="text" placeholder="Unesite naziv pisca" value={formData?.writerName}
+    <Form.Control type="text" placeholder="Unesite naziv pisca"
+       {...register("writerName",{
+        required:"Polje je obavezno"
+    })}
+    value={formData?.writerName}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -103,10 +114,15 @@ const BookEdit = () =>{
                     }
                 })}
     />
+    <span style={{color:"red"}}>{errors?.writerName?.message}</span>
     </Form.Group>
     <Form.Group >
     <Form.Label>Izdavač</Form.Label>
-    <Form.Control type="text" placeholder="Unesite naziv izdvavača" value={formData?.publisherName}
+    <Form.Control type="text" placeholder="Unesite naziv izdvavača" 
+                  {...register("publisherName",{
+                    required:"Polje je obavezno"
+                })}
+                value={formData?.publisherName}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -114,10 +130,15 @@ const BookEdit = () =>{
                     }
                 })}
     />
+    <span style={{color:"red"}}>{errors?.publisherName?.message}</span>
     </Form.Group>
     <Form.Group >
     <Form.Label>Godina izdavanja</Form.Label>
-    <Form.Control type="date" placeholder=" Unesite datum" value={formData?.publishedDate}
+    <Form.Control type="date" placeholder=" Unesite datum"
+                {...register("publishedDate",{
+                    required:"Polje je obavezno"
+                })}
+                value={formData?.publishedDate}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -125,10 +146,15 @@ const BookEdit = () =>{
                     }
                 })}
     />
+     <span style={{color:"red"}}>{errors?.publishedDate?.message}</span>
     </Form.Group>
     <Form.Group >
     <Form.Label>Zanr</Form.Label>
-    <Form.Control type="text" placeholder="Žanr" value={formData?.genre}
+    <Form.Control type="text" placeholder="Žanr"
+                {...register("genre",{
+                    required:"Polje je obavezno"
+                })}
+                value={formData?.genre}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -136,12 +162,13 @@ const BookEdit = () =>{
                     }
                 })}
     />
+     <span style={{color:"red"}}>{errors?.genre?.message}</span>
     </Form.Group>
     
     
 
   {/* <span>{errorMessage}</span>  */}
-   <Button variant="primary" type="submit" onClick={onSubmit}>
+   <Button variant="primary" type="submit" >
        Sačuvaj
   </Button>
 </Form>

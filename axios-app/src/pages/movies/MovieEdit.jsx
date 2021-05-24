@@ -1,4 +1,4 @@
-import {QueryClient,useMutation} from 'react-query';
+import {QueryClient,useMutation,useQuery} from 'react-query';
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
 
@@ -20,19 +20,29 @@ const initialData={
 
 const MovieEdit = () =>{
     
-    const queryClient = new QueryClient()
-
-    const { register, handleSubmit,formState:{errors} } = useForm();
-
     const{id}= useParams();
     const history = useHistory();
+    const queryClient = new QueryClient()
     const [formData,setformData] = useState({initialData});
+
+    const { data: response } = useQuery(['book', id], () => {
+        return id !== 'new' && getMovie(id);
+      });
+
+    const { register,reset, handleSubmit,formState:{errors} } = useForm(
+
+        { defaultValues: response?.data}
+    );
+    useEffect(() => {
+        if (!response) return;
+        reset(response.data);
+      }, [response, reset]);
+
 
     const mutationEdit = useMutation(
         (data) => editMovie(data)
         , {
         onSuccess: () => {
-            // Invalidate and refetch
             queryClient.invalidateQueries('movies');
             history.push("/movies");
             Swal.fire(
@@ -47,7 +57,7 @@ const MovieEdit = () =>{
         (data) => addMovie(data)
         , {
         onSuccess: () => {
-            // Invalidate and refetch
+           
             queryClient.invalidateQueries('movies');
             history.push("/movies"); 
              Swal.fire(
@@ -144,7 +154,7 @@ const MovieEdit = () =>{
     {...register("duration",{
         required:"Polje je obavezno"
     })}
-     value={formData?.duration}
+                value={formData?.duration}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
