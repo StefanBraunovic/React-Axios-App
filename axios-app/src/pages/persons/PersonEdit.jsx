@@ -1,4 +1,5 @@
-import {QueryClient,useMutation} from 'react-query';
+import {QueryClient,useMutation,useQuery} from 'react-query';
+import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
 import React,{useState,useEffect} from "react";
 import { useHistory, useParams } from "react-router-dom";
@@ -25,8 +26,17 @@ const PersonEdit = () =>{
     const history = useHistory();
     const [formData,setformData] = useState({initialData});
 
-    const onSubmit = (e) => {
-        e.preventDefault()
+    const { data: response } = useQuery(['people', id], () => {
+        return id !== 'new' && getPerson(id);
+      });
+
+      const { register,reset, handleSubmit,formState:{errors} } = useForm(
+
+        { defaultValues: response?.data}
+    );
+
+    const onSubmit = (e,data) => {
+       
         if(id !== 'add'){
             mutationEdit.mutate(formData)
         }else{
@@ -34,6 +44,11 @@ const PersonEdit = () =>{
             mutationAdd.mutate(formData)
         }
     }
+
+    useEffect(() => {
+        if (!response) return;
+        reset(response.data);
+      }, [response, reset]);
 
      const mutationEdit = useMutation(
         (data) => editPerson(data)
@@ -79,10 +94,14 @@ const PersonEdit = () =>{
         <Container>
     <Row  className="justify-content-md-center" style={{marginTop:"50px"}}>
         <Col xs={4}>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
   <Form.Group >
     <Form.Label>Ime</Form.Label>
-    <Form.Control type="text" placeholder="Unesite svoje ime" value={formData?.firstName}
+    <Form.Control type="text" placeholder="Unesite svoje ime"
+     {...register("firstName",{
+        required:"Polje je obavezno"
+    })}
+    value={formData?.firstName}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -90,10 +109,15 @@ const PersonEdit = () =>{
                     }
                 })}
     />
+    <span style={{color:"red"}}>{errors?.firstName?.message}</span>
     </Form.Group>
     <Form.Group >
     <Form.Label>Prezime</Form.Label>
-    <Form.Control type="text" placeholder="Unesite svoje prezime" value={formData?.lastName}
+    <Form.Control type="text" placeholder="Unesite svoje prezime"
+     {...register("lastName",{
+        required:"Polje je obavezno"
+    })}
+    value={formData?.lastName}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -101,10 +125,15 @@ const PersonEdit = () =>{
                     }
                 })}
     />
+    <span style={{color:"red"}}>{errors?.lastName?.message}</span>
     </Form.Group>
     <Form.Group >
     <Form.Label>Datum rođenja</Form.Label>
-    <Form.Control type="date" placeholder="Unesite Datum rođenja " value={formData?.dateOfBirth}
+    <Form.Control type="date" placeholder="Unesite Datum rođenja " 
+     {...register("dateOfBirth",{
+        required:"Polje je obavezno"
+    })}
+    value={formData?.dateOfBirth}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -112,10 +141,15 @@ const PersonEdit = () =>{
                     }
                 })}
     />
+    <span style={{color:"red"}}>{errors?.dateOfBirth?.message}</span>
     </Form.Group>
     <Form.Group >
     <Form.Label>Broj godina</Form.Label>
-    <Form.Control type="number" placeholder=" Unesite svoje godine" value={formData?.age}
+    <Form.Control type="number" placeholder=" Unesite svoje godine"
+     {...register("age",{
+        required:"Polje je obavezno"
+    })}
+    value={formData?.age}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -123,6 +157,7 @@ const PersonEdit = () =>{
                     }
                 })}
     />
+    <span style={{color:"red"}}>{errors?.age?.message}</span>
     </Form.Group>
   
             <div className="form-group" >
@@ -130,6 +165,9 @@ const PersonEdit = () =>{
                             <select className="form-control shadow-sm" id="gender" aria-describedby="gender"
                                    placeholder="Enter gender"
                                    value={formData?.gender}
+                                   {...register("gender",{
+                                    required:true
+                                })}
                                    onChange={(e) => setformData(prevState => {
                                        return{...prevState,'gender':e.target.value}
                                    })}
@@ -139,10 +177,15 @@ const PersonEdit = () =>{
                                 <option>OTHER</option>
                             </select>
                         </div>
+                        <span style={{color:"red"}}>{errors?.gender?.message}</span>
 
     <Form.Group >
     <Form.Label>Zanimanje</Form.Label>
-    <Form.Control type="text" placeholder="Unesite zanimanje" value={formData?.occupation}
+    <Form.Control type="text" placeholder="Unesite zanimanje" 
+     {...register("occupation",{
+        required:"Polje je obavezno"
+    })}
+    value={formData?.occupation}
                 onChange={(e)=>setformData(prevState=>{
                     return {
                         ...prevState,
@@ -150,12 +193,9 @@ const PersonEdit = () =>{
                     }
                 })}
     />
+    <span style={{color:"red"}}>{errors?.occupation?.message}</span>
     </Form.Group>
-    
-    
-
-  {/* <span>{errorMessage}</span>  */}
-   <Button variant="primary" type="submit" onClick={onSubmit}>
+   <Button variant="primary" type="submit">
        Sačuvaj
   </Button>
 </Form>

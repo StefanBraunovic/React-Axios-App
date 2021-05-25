@@ -1,4 +1,4 @@
-import {QueryClient,useMutation} from 'react-query';
+import {QueryClient,useMutation,useQuery} from 'react-query';
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
 
@@ -20,23 +20,27 @@ const initialData={
 }
 
 const BookEdit = () =>{
-    const queryClient = new QueryClient()
-    const { register, handleSubmit,formState:{errors} } = useForm();
-
     const{id}= useParams();
+    const queryClient = new QueryClient()
+    
     const history = useHistory();
     const [formData,setformData] = useState({initialData});
+    
+    const { data: response } = useQuery(['books', id], () => {
+        return id !== 'new' && getBook(id);
+    });
+    const { register,reset, handleSubmit,formState:{errors} } = useForm(
+        { defaultValues: response?.data}
+    );
+
+      useEffect(() => {
+        if (!response) return;
+        reset(response.data);
+      }, [response, reset]);
+
 
     
-    const onSubmit = (e) => {
-        e.preventDefault()
-        if(id !== 'add'){
-            mutationEdit.mutate(formData)
-        }else{
-            delete formData.id;
-            mutationAdd.mutate(formData)
-        }
-    }
+  
 
      const mutationEdit = useMutation(
         (data) => editBook(data)
@@ -58,7 +62,7 @@ const BookEdit = () =>{
         , {
         onSuccess: () => {
             // Invalidate and refetch
-            queryClient.invalidateQueries('book');
+            queryClient.invalidateQueries('books');
             history.push("/books"); 
              Swal.fire(
                 'Good job!',
@@ -67,6 +71,16 @@ const BookEdit = () =>{
               )
         },
     });
+      const onSubmit = (data) => {
+        // e.preventDefault()
+        if(id !== 'add'){
+            mutationEdit.mutate(formData)
+        }else{
+            delete formData.id;
+            mutationAdd.mutate(formData)
+        }
+    }
+    
 
     useEffect(()=>{
 
@@ -84,11 +98,11 @@ const BookEdit = () =>{
     <Row  className="justify-content-md-center" style={{marginTop:"50px"}}>
         <Col xs={4}>
         <Form onSubmit={handleSubmit(onSubmit)}>
-  <Form.Group controlId="Naziv">
+  <Form.Group >
     <Form.Label>Naziv</Form.Label>
     <Form.Control type="text" placeholder="Unesite naziv knjige" 
                  {...register("isbn",{
-                    required:true
+                    required:"Polje je obavezno"
                 })}
                 value={formData?.isbn}
                 onChange={(e)=>setformData(prevState=>{
