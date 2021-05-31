@@ -1,6 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table'
 import uuid from 'react-uuid'
+import PropTypes from 'prop-types'
 
 
 const TableData = ({
@@ -31,3 +32,12 @@ const TableData = ({
 }
 
 export default TableData;
+
+
+
+TableData.propTypes={
+  headers:PropTypes.array.isRequired,
+  rows:PropTypes.array.isRequired
+}
+
+
