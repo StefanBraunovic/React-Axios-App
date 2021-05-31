@@ -1,59 +1,120 @@
 import { Switch } from 'react-router';
-import {QueryClient,QueryClientProvider} from 'react-query'
-
-import { ReactQueryDevtools } from 'react-query/devtools'
-
-import './App.css';
-import Login from './pages/login/Login';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from './pages/home/Home';
-import Movies from './pages/movies/Movies';
-import MovieEdit from './pages/movies/MovieEdit';
-import Books from './pages/books/Books';
-import BookEdit from './pages/books/BookEdit';
-import PersonEdit from './pages/persons/PersonEdit';
-import Persons from './pages/persons/Persons';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import React from 'react';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import PrivateRoute from './privateRoute/PrivateRoute';
-import Register from './pages/register/Register';
+import { Suspense } from 'react';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+const Login = React.lazy(() => import('./pages/login/Login'));
+const Register = React.lazy(() => import('./pages/register/Register'));
+const Home = React.lazy(() => import('./pages/home/Home'));
+const Movies = React.lazy(() => import('./pages/movies/Movies'));
+const MovieEdit = React.lazy(() => import('./pages/movies/MovieEdit'));
+const Books = React.lazy(() => import('./pages/books/Books'));
+const BookEdit = React.lazy(() => import('./pages/books/BookEdit'));
+const PersonEdit = React.lazy(() => import('./pages/persons/PersonEdit'));
+const Persons = React.lazy(() => import('./pages/persons/Persons'));
 
-
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
-			       <ReactQueryDevtools initialIsOpen={false} />
+			<ReactQueryDevtools initialIsOpen={false} />
 
-		<div className="App">
-			{/* <NavbarTop /> */}
-			<Switch>
-				<PrivateRoute path={'/login'} component={Login} />
-				<PrivateRoute path={'/register'} component={Register} />
-				<PrivateRoute
-					path={'/movies/:id'}
-					exact
-					component={MovieEdit}
-					isPrivate
-				/>
-				<PrivateRoute path={'/movies'} exact component={Movies} isPrivate />
-				<PrivateRoute
-					path={'/books/:id'}
-					exact
-					component={BookEdit}
-					isPrivate
-				/>
-				<PrivateRoute path={'/books'} exact component={Books} isPrivate />
-				<PrivateRoute
-					path={'/people/:id'}
-					exact
-					component={PersonEdit}
-					isPrivate
-				/>
-				<PrivateRoute path={'/people'} exact component={Persons} isPrivate />
-				<PrivateRoute path={'/'} exact component={Home} isPrivate />
-			</Switch>
-		</div>
+			<div className="App">
+				{/* <NavbarTop /> */}
+				<Switch>
+					<PrivateRoute
+						path={'/login'}
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<Login />
+							</Suspense>
+						)}
+					/>
+					<PrivateRoute
+						path={'/register'}
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<Register />
+							</Suspense>
+						)}
+					/>
+					<PrivateRoute
+						path={'/movies/:id'}
+						exact
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<MovieEdit />
+							</Suspense>
+						)}
+						isPrivate
+					/>
+					<PrivateRoute
+						path={'/movies'}
+						exact
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<Movies />
+							</Suspense>
+						)}
+						isPrivate
+					/>
+					<PrivateRoute
+						path={'/books/:id'}
+						exact
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<BookEdit />
+							</Suspense>
+						)}
+						isPrivate
+					/>
+					<PrivateRoute
+						path={'/books'}
+						exact
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<Books />
+							</Suspense>
+						)}
+						isPrivate
+					/>
+					<PrivateRoute
+						path={'/people/:id'}
+						exact
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<PersonEdit />
+							</Suspense>
+						)}
+						isPrivate
+					/>
+					<PrivateRoute
+						path={'/people'}
+						exact
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<Persons />
+							</Suspense>
+						)}
+						isPrivate
+					/>
+					<PrivateRoute
+						path={'/'}
+						exact
+						component={() => (
+							<Suspense fallback={<div>Loading...</div>}>
+								<Home />
+							</Suspense>
+						)}
+						isPrivate
+					/>
+				</Switch>
+			</div>
 		</QueryClientProvider>
 	);
 }
