@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import  { Col, Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-// import axios from 'axios';
 import {login} from "../../services/account"
 import { useHistory,Link } from 'react-router-dom';
-// import {getAccount} from '../../services/account'
+
 
 import Nav from 'react-bootstrap/Nav'
 
