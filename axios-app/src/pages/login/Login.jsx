@@ -50,7 +50,7 @@ const Login= () =>{
     return <div>
 
 <Container>
-      <Nav.Link><Link style={{float:'right'}} to="/register">Sign Up</Link></Nav.Link>
+      <Nav.Link><Button style={{float:'right'}} onClick={()=>{history.push('/register')}}>Sign Up</Button></Nav.Link>
     <h1>Login Page</h1>
     <Row  className="justify-content-md-center" style={{marginTop:"200px"}}>
         <Col xs={4}>
